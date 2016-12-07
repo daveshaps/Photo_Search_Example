@@ -45,6 +45,7 @@
                     </view>
                     <connections>
                         <outlet property="scrollView" destination="CHk-z7-3T3" id="eTe-D1-bIl"/>
+                        <outlet property="searchBar" destination="RLc-Yo-W40" id="nUr-h3-TAo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

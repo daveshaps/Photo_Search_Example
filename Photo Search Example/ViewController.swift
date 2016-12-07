@@ -12,6 +12,8 @@ class ViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchFlickrBy("dogs")
@@ -27,7 +29,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
         let manager = AFHTTPSessionManager()
         //question: how would you know what to put in the search parameters?
         let searchParameters:[String:Any] = ["method": "flickr.photos.search",
-                                             "api_key": "YOUR_API_KEY_FROM_ABOVE",
+                                             "api_key": "0696cc4c5e0284868ecd458b00747345",
                                              "format": "json",
                                              "nojsoncallback": 1,
                                              "text": searchString,
@@ -38,7 +40,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
                     parameters: searchParameters,
                     progress: nil,
                     success: { (operation: URLSessionDataTask, responseObject:Any?) in
-                        if let responseObject = responseObject {
+                        if let responseObject = responseObject as? [String: AnyObject] {
                             print("Response: " + (responseObject as AnyObject).description)
                             
                             if let photos = responseObject["photos"] as? [String: AnyObject] {
@@ -49,7 +51,7 @@ class ViewController: UIViewController, UISearchBarDelegate {
                                     self.scrollView.contentSize = CGSize(width: imageWidth, height: imageWidth * CGFloat(photoArray.count))
                                     
                                     //loop through phoroArray to extract photos
-                                    for (i,photoDictionary) in photoArray.enumerate() {
+                                    for (i,photoDictionary) in photoArray.enumerated() {
                                         if let imageURLString = photoDictionary["url_m"] as? String {
                                             
                                             let imageView = UIImageView(frame: CGRect(x:0, y:imageWidth*CGFloat(i), width:imageWidth, height:imageWidth)) //created empty imageView
@@ -74,8 +76,9 @@ class ViewController: UIViewController, UISearchBarDelegate {
         }
         searchBar.resignFirstResponder()
         if let searchText = searchBar.text {
-            searchFlickrBy(searchText)
+            searchFlickrBy(String(searchText))
         }
+        
     }
     
     
